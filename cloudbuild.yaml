@@ -1,0 +1,15 @@
+steps:
+# Build the container image
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/aerial-electron-405400/myimage', '.']
+
+# Push the container image to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/aerial-electron-405400/myimage']
+# Deploy container image to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: ['run', 'deploy', 'spring', '--image', 'gcr.io/aerial-electron-405400/myimage', '--region', 'us-west2']
+images:
+- gcr.io/aerial-electron-405400/myimage
